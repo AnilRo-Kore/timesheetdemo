@@ -1,6 +1,6 @@
 var bootstrap = require("./bootstrap.js");
 var assert = require('assert');
-var url = "mongodb://52.71.161.217:27017/TeamB";
+var url = "mongodb://localhost:27017/TeamB";
 var debug = require('debug')('DBManager');
 
 function getConnection(callback) {

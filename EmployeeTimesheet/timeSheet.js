@@ -228,7 +228,7 @@ app.listen(port, function () {
     });
 */
 
-var port = process.env.PORT || '3000';
+var port = process.env.PORT || '5686';
 app.set('port', port);
 app.listen(port,function () {
     console.log('Example app listening on port !')
