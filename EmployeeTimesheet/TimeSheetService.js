@@ -15,6 +15,23 @@ TimeSheet.prototype.addTimesheetDetails = function(timesheetDetails, callback){
     });
 };
 
+//get timesheet for employee
+TimeSheet.prototype.getProjectTimeSheetForProject = function (request, response, callback) {
+    // console.log("991 ", request.params);
+    dbManager.getConnection(function (db) {
+    db.collection(collectionName).find({
+    projectName: request.params.projectName
+    })
+    .toArray(function (err, data) {
+    if (err)
+    throw err;
+    
+    db.close();
+    callback(data);
+    });
+    });
+    }
+
 //get timesheet details
 TimeSheet.prototype.getTimeSheetDetails = function (request, response, callback) {
     dbManager.getConnection(function (db) {

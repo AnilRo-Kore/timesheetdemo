@@ -1,4 +1,4 @@
-var collectionName = "ProjectDetails";
+var collectionName = "Project Details";
 var dbManager = require("./DBManager.js");
 var debug = require('debug')('ProjectDetailsService');
 

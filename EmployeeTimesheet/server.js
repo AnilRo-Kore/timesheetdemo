@@ -218,6 +218,31 @@ app.put('/timesheet/bot/employee/:empId', function(request, response){
     // Timesheet.updatedTimesheetDetails(request, response, callbackMethod);
 });
 
+//Get Employee Role
+app.get('/timesheet/bot/employee/:empId', function (request, response) {
+    // debug("/timesheet/bot/:projectManager", request.body);
+    // debug("Connected correctly to server");
+    // response.send(data);
+    
+    var callbackMethod = function (data) {
+    response.send(data);
+    };
+    EmployeeService.getEmployeeRole(request, response, callbackMethod);
+    });
+
+//Get project timeSheet
+app.get('/timesheet/bot/projectName/:projectName', function (request, response) {
+    // debug("/timesheet/bot/:projectManager", request.body);
+    // debug("Connected correctly to server");
+    // response.send(data);
+    
+    var callbackMethod = function (data) {
+    response.send(data);
+    };
+    Timesheet.getProjectTimeSheetForProject(request, response, callbackMethod);
+    });
+
+    
 /* var port = process.env.PORT || 5000;
 app.listen(port, function () {
     debug("Listening on " + port);
@@ -233,3 +258,4 @@ app.set('port', port);
 app.listen(port,function () {
     console.log('Example app listening on port !')
     });
+

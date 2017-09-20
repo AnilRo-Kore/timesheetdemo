@@ -15,7 +15,22 @@ Employees.prototype.addEmpDetails = function (empDetails, callback) {
         });
     });
 };
-
+//get employee role
+Employees.prototype.getEmployeeRole = function (request, response, callback) {
+    // console.log("991 ", request.params);
+    dbManager.getConnection(function (db) {
+    db.collection(collectionName).find({
+        empId: request.params.empId
+    })
+    .toArray(function (err, data) {
+    if (err)
+    throw err;
+    
+    db.close();
+    callback(data);
+    });
+    });
+    }
 module.exports = {
     getInst: function () {
         return new Employees();
