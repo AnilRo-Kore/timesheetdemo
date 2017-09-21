@@ -9,7 +9,7 @@ var Timesheet = require("./TimeSheetService.js").getInst();
 var ProjectDetails = require("./ProjectDetailsService.js").getInst();
 var ProjectAssignmentDetails = require("./ProjectAssignmentService.js").getInst();
 
-var middleware = function(request, response, next) {
+var middleware = function (request, response, next) {
     next();
 };
 
@@ -92,37 +92,37 @@ app.post('/timesheet/bot/addProjectDetails', function (request, response) {
 app.post('/timesheet/bot/addEmployeeTimesheetDetails', function (request, response) {
     debug("/timesheet/bot/addEmployeeTimesheetDetails", request.body);
     var filter = {};
-        if (request.body.empId !== null && request.body.empId && request.body.empId !== '') {
-            filter.empId = request.body.empId;
-        }
-        if (request.body.empName !== null && request.body.empName && request.body.empName !== '') {
-            filter.empName = request.body.empName;
-        }
-        if (request.body.projectName !== null && request.body.projectName && request.body.projectName !== '') {
-            filter.projectName = request.body.projectName;
-        }
-        if (request.body.DayDate !== null && request.body.DayDate && request.body.DayDate !== '') {
-            filter.DayDate = request.body.DayDate;
-        }
-        if (request.body.ClockedHours !== null && request.body.ClockedHours && request.body.ClockedHours !== '') {
-            filter.ClockedHours = request.body.ClockedHours;
-        }
-        if (request.body.ApprovalState !== null && request.body.ApprovalState && request.body.ApprovalState !== '') {
-            filter.ApprovalState = request.body.ApprovalState;
-        }
-        if (request.body.projectManager !== null && request.body.projectManager && request.body.projectManager !== '') {
-            filter.projectManager = request.body.projectManager;
-        }
-        debug(filter);
-        // var timesheetInst = Timesheet.getInst();
-        Timesheet.addTimesheetDetails(filter, function(result){
-            var addEmployeeTimesheetDetails = {
-                "data": {
-                    "success": true
-                }
-            };
-            response.send(addEmployeeTimesheetDetails);
-        });
+    if (request.body.empId !== null && request.body.empId && request.body.empId !== '') {
+        filter.empId = request.body.empId;
+    }
+    if (request.body.empName !== null && request.body.empName && request.body.empName !== '') {
+        filter.empName = request.body.empName;
+    }
+    if (request.body.projectName !== null && request.body.projectName && request.body.projectName !== '') {
+        filter.projectName = request.body.projectName;
+    }
+    if (request.body.DayDate !== null && request.body.DayDate && request.body.DayDate !== '') {
+        filter.DayDate = request.body.DayDate;
+    }
+    if (request.body.ClockedHours !== null && request.body.ClockedHours && request.body.ClockedHours !== '') {
+        filter.ClockedHours = request.body.ClockedHours;
+    }
+    if (request.body.ApprovalState !== null && request.body.ApprovalState && request.body.ApprovalState !== '') {
+        filter.ApprovalState = request.body.ApprovalState;
+    }
+    if (request.body.projectManager !== null && request.body.projectManager && request.body.projectManager !== '') {
+        filter.projectManager = request.body.projectManager;
+    }
+    debug(filter);
+    // var timesheetInst = Timesheet.getInst();
+    Timesheet.addTimesheetDetails(filter, function (result) {
+        var addEmployeeTimesheetDetails = {
+            "data": {
+                "success": true
+            }
+        };
+        response.send(addEmployeeTimesheetDetails);
+    });
 });
 
 //Adding Project Assignment API
@@ -187,8 +187,8 @@ app.get('/timesheet/bot/getTimeSheet/:empId', function (request, response) {
 app.get('/timesheet/bot/projectId/:projectId', function (request, response) {
     // debug("/timesheet/bot/:projectManager", request.body);
     // debug("Connected correctly to server");
-        // response.send(data);
-    
+    // response.send(data);
+
     var callbackMethod = function (data) {
         response.send(data);
     };
@@ -196,76 +196,59 @@ app.get('/timesheet/bot/projectId/:projectId', function (request, response) {
 });
 
 //Update employee timesheet by manager
-app.put('/timesheet/bot/employee/:empId', function(request, response){
+app.put('/timesheet/bot/employee/:empId', function (request, response) {
     var filter = {};
-    filter.empId=request.params.empId;
+    filter.empId = request.params.empId;
     if (request.body.ApprovalState !== null && request.body.ApprovalState && request.body.ApprovalState !== '') {
-    filter.ApprovalState = request.body.ApprovalState;
+        filter.ApprovalState = request.body.ApprovalState;
     }
-    console.log("Body",request.body)
-    console.log("filter===",filter)
-    Timesheet.updatedTimesheetDetails(filter, function(result){
-    var updateEmployeeTimesheetDetails = {
-    "data": {
-    success:true
-    }
-    };
-    response.send(updateEmployeeTimesheetDetails);
+    Timesheet.updatedTimesheetDetails(filter, function (result) {
+        var updateEmployeeTimesheetDetails = {
+            "data": {
+                success: true
+            }
+        };
+        response.send(updateEmployeeTimesheetDetails);
     });
-    
-    // var callbackMethod = function(data){
-    // response.send(data);
-    // };
-    // console.log("123456789", request.body.ApprovalState);
-    // Timesheet.updatedTimesheetDetails(request, response, callbackMethod);
-    });
+
+});
 //Get Employee Role
 app.get('/timesheet/bot/employee/:empId', function (request, response) {
     // debug("/timesheet/bot/:projectManager", request.body);
     // debug("Connected correctly to server");
     // response.send(data);
-    
+
     var callbackMethod = function (data) {
-    response.send(data);
+        response.send(data);
     };
     EmployeeService.getEmployeeRole(request, response, callbackMethod);
-    });
+});
 
 //Get project timeSheet
 app.get('/timesheet/bot/projectName/:projectName', function (request, response) {
     // debug("/timesheet/bot/:projectManager", request.body);
     // debug("Connected correctly to server");
     // response.send(data);
-    
+
     var callbackMethod = function (data) {
-    response.send(data);
+        response.send(data);
     };
     Timesheet.getProjectTimeSheetForProject(request, response, callbackMethod);
-    });
+});
 
- //Get All Projects
- app.get('/timesheet/bot/allProjects', function(request, response){
+//Get All Projects
+app.get('/timesheet/bot/allProjects', function (request, response) {
     var callbackMethod = function (data) {
-    response.send(data);
+        response.send(data);
     };
-    
+
     ProjectDetails.getAllProjects(request, response, callbackMethod);
-    });   
+});
 
-    
-/* var port = process.env.PORT || 5000;
-app.listen(port, function () {
-    debug("Listening on " + port);
-}); */
-
-/*app.listen(3000, function () {
-    console.log('Example app listening on port 3000!')
-    });
-*/
 
 var port = process.env.PORT || '5686';
 app.set('port', port);
-app.listen(port,function () {
+app.listen(port, function () {
     console.log('Example app listening on port !')
-    });
+});
 

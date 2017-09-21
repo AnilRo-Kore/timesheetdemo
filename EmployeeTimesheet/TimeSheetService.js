@@ -51,7 +51,9 @@ TimeSheet.prototype.getTimeSheetDetails = function (request, response, callback)
 TimeSheet.prototype.updatedTimesheetDetails = function (timesheetDetails, callback) {
     dbManager.getConnection(function (db) {
         db.collection(collectionName)
-            .updateOne(timesheetDetails, {upsert:true}, function (err, result) {
+            .update({ empId: timesheetDetails.empId }, { $set: { ApprovalState: timesheetDetails.ApprovalState } }, function (err, result) {
+                console.log("errror", err);
+                console.log("daaaaa", result)
                 if (err)
                     throw err;
 
@@ -61,22 +63,6 @@ TimeSheet.prototype.updatedTimesheetDetails = function (timesheetDetails, callba
             });
     });
 }
-
-TimeSheet.prototype.updatedTimesheetDetails = function (timesheetDetails, callback) {
-    dbManager.getConnection(function (db) {
-    db.collection(collectionName)
-    .update({empId:timesheetDetails.empId},{$set:{ApprovalState:timesheetDetails.ApprovalState}}, function (err, result) {
-    console.log("errror",err);
-    console.log("daaaaa",result)
-    if (err)
-    throw err;
-    
-    db.close();
-    // console.log("request.body.ApprovalState", request.body.ApprovalState);
-    callback(result);
-    });
-    });
-    }
 
 
 module.exports = {
