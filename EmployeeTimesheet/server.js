@@ -199,9 +199,9 @@ app.get('/timesheet/bot/projectId/:projectId', function (request, response) {
 app.put('/timesheet/bot/employee/:empId', function (request, response) {
     var filter = {};
     filter.empId = request.params.empId;
-    if (request.body.ApprovalState !== null && request.body.ApprovalState && request.body.ApprovalState !== '') {
-        filter.ApprovalState = request.body.ApprovalState;
-    }
+    // if (request.body.ApprovalState !== null && request.body.ApprovalState && request.body.ApprovalState !== '') {
+    //     filter.ApprovalState = request.body.ApprovalState;
+    // }
     Timesheet.updatedTimesheetDetails(filter, function (result) {
         var updateEmployeeTimesheetDetails = {
             "data": {
@@ -212,6 +212,7 @@ app.put('/timesheet/bot/employee/:empId', function (request, response) {
     });
 
 });
+
 //Get Employee Role
 app.get('/timesheet/bot/employee/:empId', function (request, response) {
     // debug("/timesheet/bot/:projectManager", request.body);
@@ -251,4 +252,3 @@ app.set('port', port);
 app.listen(port, function () {
     console.log('Example app listening on port !')
 });
-

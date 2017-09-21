@@ -1,11 +1,11 @@
 var collectionName = "Timesheet_Employee";
 var dbManager = require("./DBManager.js");
 
-function TimeSheet(){
+function TimeSheet() {
 }
 
-TimeSheet.prototype.addTimesheetDetails = function(timesheetDetails, callback){
-    dbManager.getConnection(function(db){
+TimeSheet.prototype.addTimesheetDetails = function (timesheetDetails, callback) {
+    dbManager.getConnection(function (db) {
         db.collection(collectionName).insert(timesheetDetails, function (err, result) {
             if (err)
                 throw err;
@@ -19,18 +19,18 @@ TimeSheet.prototype.addTimesheetDetails = function(timesheetDetails, callback){
 TimeSheet.prototype.getProjectTimeSheetForProject = function (request, response, callback) {
     // console.log("991 ", request.params);
     dbManager.getConnection(function (db) {
-    db.collection(collectionName).find({
-    projectName: request.params.projectName
-    })
-    .toArray(function (err, data) {
-    if (err)
-    throw err;
-    
-    db.close();
-    callback(data);
+        db.collection(collectionName).find({
+            projectName: request.params.projectName
+        })
+            .toArray(function (err, data) {
+                if (err)
+                    throw err;
+
+                db.close();
+                callback(data);
+            });
     });
-    });
-    }
+}
 
 //get timesheet details
 TimeSheet.prototype.getTimeSheetDetails = function (request, response, callback) {
@@ -38,35 +38,33 @@ TimeSheet.prototype.getTimeSheetDetails = function (request, response, callback)
         db.collection(collectionName).find({
             empId: request.params.empId
         })
-        .toArray(function (err, data) {
-            if (err)
-                throw err;
-
-            db.close();
-            callback(data);
-        });
-    });
-}
-
-TimeSheet.prototype.updatedTimesheetDetails = function (timesheetDetails, callback) {
-    dbManager.getConnection(function (db) {
-        db.collection(collectionName)
-            .update({ empId: timesheetDetails.empId }, { $set: { ApprovalState: timesheetDetails.ApprovalState } }, function (err, result) {
-                console.log("errror", err);
-                console.log("daaaaa", result)
+            .toArray(function (err, data) {
                 if (err)
                     throw err;
 
                 db.close();
-                // console.log("request.body.ApprovalState", request.body.ApprovalState);
-                callback(result);
+                callback(data);
             });
     });
 }
 
 
+TimeSheet.prototype.updatedTimesheetDetails = function (timesheetDetails, callback) {
+    dbManager.getConnection(function (db) {
+        db.collection(collectionName)
+            .update({ empId: timesheetDetails.empId }, { $set: { ApprovalState: timesheetDetails.ApprovalState } }, function (err, result) {
+                if (err)
+                    throw err;
+
+                db.close();
+                callback(result);
+            });
+    });
+};
+
+
 module.exports = {
-    getInst: function(){
+    getInst: function () {
         return new TimeSheet();
     }
 }
