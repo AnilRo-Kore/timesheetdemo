@@ -198,26 +198,27 @@ app.get('/timesheet/bot/projectId/:projectId', function (request, response) {
 //Update employee timesheet by manager
 app.put('/timesheet/bot/employee/:empId', function(request, response){
     var filter = {};
+    filter.empId=request.params.empId;
     if (request.body.ApprovalState !== null && request.body.ApprovalState && request.body.ApprovalState !== '') {
-            filter.ApprovalState = request.body.ApprovalState;
-        }
-
-        Timesheet.updatedTimesheetDetails(filter, function(result){
-            var updateEmployeeTimesheetDetails = {
-                "data": {
-                    "success": true
-                }
-            };
-            response.send(updateEmployeeTimesheetDetails);
-        });
-
+    filter.ApprovalState = request.body.ApprovalState;
+    }
+    console.log("Body",request.body)
+    console.log("filter===",filter)
+    Timesheet.updatedTimesheetDetails(filter, function(result){
+    var updateEmployeeTimesheetDetails = {
+    "data": {
+    success:true
+    }
+    };
+    response.send(updateEmployeeTimesheetDetails);
+    });
+    
     // var callbackMethod = function(data){
-    //     response.send(data);
+    // response.send(data);
     // };
-    //     console.log("123456789", request.body.ApprovalState);
+    // console.log("123456789", request.body.ApprovalState);
     // Timesheet.updatedTimesheetDetails(request, response, callbackMethod);
-});
-
+    });
 //Get Employee Role
 app.get('/timesheet/bot/employee/:empId', function (request, response) {
     // debug("/timesheet/bot/:projectManager", request.body);
@@ -241,6 +242,15 @@ app.get('/timesheet/bot/projectName/:projectName', function (request, response) 
     };
     Timesheet.getProjectTimeSheetForProject(request, response, callbackMethod);
     });
+
+ //Get All Projects
+ app.get('/timesheet/bot/allProjects', function(request, response){
+    var callbackMethod = function (data) {
+    response.send(data);
+    };
+    
+    ProjectDetails.getAllProjects(request, response, callbackMethod);
+    });   
 
     
 /* var port = process.env.PORT || 5000;

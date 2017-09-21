@@ -1,4 +1,4 @@
-var collectionName = "Project Details";
+var collectionName = "ProjectDetails";
 var dbManager = require("./DBManager.js");
 var debug = require('debug')('ProjectDetailsService');
 
@@ -31,7 +31,22 @@ ProjectDetails.prototype.getProjectDetails = function(request, response, callbac
             callback(data);
         });
     });
-}
+};
+
+//get all projects
+ProjectDetails.prototype.getAllProjects = function (request, response, callback) {
+    dbManager.getConnection(function (db) {
+        db.collection(collectionName).find()
+            .toArray(function (err, data) {
+                if (err)
+                    throw err;
+
+                db.close();
+                callback(data);
+            });
+    });
+};
+
 
 module.exports = {
     getInst: function(){

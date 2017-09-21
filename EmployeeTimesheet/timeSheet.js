@@ -218,6 +218,33 @@ app.put('/timesheet/bot/employee/:empId', function(request, response){
     // Timesheet.updatedTimesheetDetails(request, response, callbackMethod);
 });
 
+//Update employee timesheet by manager
+app.put('/timesheet/bot/employee/:empId', function(request, response){
+    var filter = {};
+    filter.empId=request.params.empId;
+    if (request.body.ApprovalState !== null && request.body.ApprovalState && request.body.ApprovalState !== '') {
+    filter.ApprovalState = request.body.ApprovalState;
+    }
+    console.log("Body",request.body)
+    console.log("filter===",filter)
+    Timesheet.updatedTimesheetDetails(filter, function(result){
+    var updateEmployeeTimesheetDetails = {
+    "data": {
+    success:true
+    }
+    };
+    response.send(updateEmployeeTimesheetDetails);
+    });
+    
+    // var callbackMethod = function(data){
+    // response.send(data);
+    // };
+    // console.log("123456789", request.body.ApprovalState);
+    // Timesheet.updatedTimesheetDetails(request, response, callbackMethod);
+    });
+
+
+
 /* var port = process.env.PORT || 5000;
 app.listen(port, function () {
     debug("Listening on " + port);

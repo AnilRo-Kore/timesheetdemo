@@ -30,8 +30,7 @@ ProjectAssignment.prototype.getEmployeeDetails = function (request, response, ca
             callback(data);
         });
     });
-}
-
+};
 
 module.exports = {
     getInst: function () {
