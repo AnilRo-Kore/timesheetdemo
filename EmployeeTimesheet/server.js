@@ -246,6 +246,15 @@ app.get('/timesheet/bot/allProjects', function (request, response) {
     ProjectDetails.getAllProjects(request, response, callbackMethod);
 });
 
+//Get All Employees
+app.get('/timesheet/bot/allEmployees', function (request, response) {
+    var callbackMethod = function (data) {
+        response.send(data);
+    };
+
+    EmployeeService.getAllEmployees(request, response, callbackMethod);
+});
+
 
 var port = process.env.PORT || '5686';
 app.set('port', port);
